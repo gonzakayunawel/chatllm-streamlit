@@ -52,7 +52,7 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = [
         {
             "role": "assistant",
-            "content": "Hola, soy ChatGPT custom, ¿En qué puedo ayudarte?",
+            "content": "Hola, soy OmniChat, un asistente que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?",
         }
     ]
 
