@@ -10,7 +10,9 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 # Título de la aplicación
-st.title(":robot_face: Mi ChatGPT :sunglasses:")
+st.title(":robot_face: My Local ChatGPT :sunglasses:")
+
+init_content = "Hola, soy Local ChatGPT, un asistente que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?"
 
 # Using "with" notation
 with st.sidebar:
@@ -38,7 +40,7 @@ with st.sidebar:
         st.session_state["messages"] = [
             {
                 "role": "assistant",
-                "content": "Hola, soy ChatGPT, ¿En qué puedo ayudarte?",
+                "content": init_content,
             }
         ]
 
@@ -52,7 +54,7 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = [
         {
             "role": "assistant",
-            "content": "Hola, soy OmniChat, un asistente que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?",
+            "content": init_content,
         }
     ]
 
