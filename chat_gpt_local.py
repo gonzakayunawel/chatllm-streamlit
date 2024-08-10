@@ -3,6 +3,13 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from groq import Groq
 import os
+import magic
+
+def file_type_inference(file_path):
+    mime = magic.Magic(mime=True)
+    file_type = mime.from_file(file_path)
+    return file_type
+
 
 # Llama a la clave API de otro archivo
 load_dotenv()
@@ -11,6 +18,17 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 # Título de la aplicación
 st.title(":robot_face: My Local ChatGPT :sunglasses:")
+
+uploaded_files = st.file_uploader(
+    "Choose a file", accept_multiple_files=True
+)
+for uploaded_file in uploaded_files:
+    bytes_data = uploaded_file.read()
+    st.write("filename:", uploaded_file.name)
+    st.write(bytes_data)
+    file_type = file_type_inference(bytes_data)
+    st.write(file_type)
+
 
 init_content = "Hola, soy Local ChatGPT, un asistente que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?"
 
