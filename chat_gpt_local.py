@@ -89,7 +89,7 @@ if user_input := st.chat_input():
         if selected_model in ["gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo", "gpt-4-turbo"]:
             client = OpenAI(api_key=OPENAI_API_KEY)
             response = client.chat.completions.create(
-                model=selected_model,  # Se puede cambiar el modelo
+                model=selected_model,
                 messages=st.session_state["messages"],
             )
         elif selected_model == "mistral-large-latest":
