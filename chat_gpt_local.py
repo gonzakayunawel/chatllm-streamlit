@@ -22,13 +22,10 @@ MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 # Título de la aplicación
 st.title(":robot_face: My Local ChatGPT :sunglasses:")
 
-uploaded_files = st.file_uploader("Choose a file", accept_multiple_files=True)
-for uploaded_file in uploaded_files:
-    bytes_data = uploaded_file.read()
-    st.write("filename:", uploaded_file.name)
-    st.write(bytes_data)
-    file_type = file_type_inference(bytes_data)
-    st.write(file_type)
+uploaded_files = st.file_uploader(
+    "Choose a file",
+    accept_multiple_files=True
+    )
 
 
 init_content = "Hola, soy Local ChatGPT, un asistente que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?"
