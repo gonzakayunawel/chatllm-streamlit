@@ -1,16 +1,11 @@
 import streamlit as st
+import os
+
 from openai import OpenAI
 from dotenv import load_dotenv
 from groq import Groq
-import os
-import magic
 from mistralai import Mistral
-
-
-def file_type_inference(file_path):
-    mime = magic.Magic(mime=True)
-    file_type = mime.from_file(file_path)
-    return file_type
+import anthropic
 
 
 # Llama a la clave API de otro archivo
@@ -18,6 +13,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
 # Título de la aplicación
 st.title(":robot_face: My Local ChatGPT :sunglasses:")
@@ -44,6 +40,7 @@ with st.sidebar:
             "llama3-70b-8192",
             "mixtral-8x7b-32768",
             "mistral-large-latest",
+            "claude-3-5-sonnet-20240620",
         ),
     )
 
@@ -63,12 +60,13 @@ with st.sidebar:
 
 # Inicializa el estado de la sesión si es necesario
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [
-        {
-            "role": "assistant",
-            "content": init_content,
-        }
-    ]
+    if selected_model != "claude-3-5-sonnet-20240620":
+        st.session_state["messages"] = [
+            {
+                "role": "assistant",
+                "content": init_content,
+            }
+        ]
 
 
 # Mostrar mensajes existentes
@@ -92,8 +90,18 @@ if user_input := st.chat_input():
         elif selected_model == "mistral-large-latest":
             client = Mistral(api_key=MISTRAL_API_KEY)
             response = client.chat.complete(
-                model=selected_model,
+                model="mistral-large-latest",
                 messages=st.session_state["messages"],
+            )
+
+        elif selected_model == "claude-3-5-sonnet-20240620":
+            client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+            response = client.messages.create(
+                model=selected_model,
+                max_tokens=1000,
+                temperature=0,
+                system=init_content,
+                messages=[{"role": "user", "content": [{"type": "text", "text": str(st.session_state["messages"])}]}],
             )
         else:
             client = Groq(api_key=GROQ_API_KEY)
@@ -102,7 +110,11 @@ if user_input := st.chat_input():
                 messages=st.session_state["messages"],
             )
 
-        response_content = response.choices[0].message.content
+        if selected_model == "claude-3-5-sonnet-20240620":
+            for msg in response.content:
+                response_content = msg.text
+        else:
+            response_content = response.choices[0].message.content
         st.session_state["messages"].append(
             {"role": "assistant", "content": response_content}
         )
