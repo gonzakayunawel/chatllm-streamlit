@@ -2,18 +2,18 @@ import streamlit as st
 import os
 
 from openai import OpenAI
-from dotenv import load_dotenv
 from groq import Groq
 from mistralai import Mistral
 import anthropic
 
 
 # Llama a la clave API de otro archivo
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+MISTRAL_API_KEY = st.secrets["MISTRAL_API_KEY"]
+ANTHROPIC_API_KEY = st.secrets["ANTHROPIC_API_KEY"]
+
 
 # Título de la aplicación
 st.title(":robot_face: My Local ChatGPT :sunglasses:")
@@ -32,6 +32,7 @@ with st.sidebar:
     selected_model = st.radio(
         "Selecciona el modelo a utilizar",
         (
+            "o1-mini",
             "gpt-4o-mini",
             "gpt-4o",
             "gpt-3.5-turbo",
