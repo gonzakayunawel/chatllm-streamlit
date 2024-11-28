@@ -28,7 +28,7 @@ init_content = "Hola, soy un Asistente de GenIA que permite acceder a múltiples
 # Using "with" notation
 with st.sidebar:
     st.title("ChatGPT Model Selection")
-    selected_model = st.radio(
+    selected_model = st.dropdown(
         "Selecciona el modelo a utilizar",
         (
             "gpt-4o-mini",
