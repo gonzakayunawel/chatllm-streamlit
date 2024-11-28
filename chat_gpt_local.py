@@ -24,7 +24,7 @@ uploaded_files = st.file_uploader(
     )
 
 
-init_content = "Hola, soy Local ChatGPT, un asistente que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?"
+init_content = "Hola, soy un asistente Multilenguaje y Multimodelo que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?"
 
 # Using "with" notation
 with st.sidebar:
@@ -32,7 +32,6 @@ with st.sidebar:
     selected_model = st.radio(
         "Selecciona el modelo a utilizar",
         (
-            "o1-mini",
             "gpt-4o-mini",
             "gpt-4o",
             "gpt-3.5-turbo",
@@ -47,7 +46,7 @@ with st.sidebar:
 
     st.session_state["llm_model"] = selected_model
 
-    st.write(f"Ahora estás usando el modelo: {st.session_state["llm_model"]}.")
+    st.write(f"Ahora estás usando el modelo: {selected_model}.")
 
     # Botón para reiniciar el contexto
     if st.button("Nuevo Chat"):
