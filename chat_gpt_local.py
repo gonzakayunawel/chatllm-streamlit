@@ -1,5 +1,4 @@
 import streamlit as st
-import os
 
 from openai import OpenAI
 from groq import Groq
@@ -24,7 +23,7 @@ uploaded_files = st.file_uploader(
     )
 
 
-init_content = "Hola, soy un asistente Multilenguaje y Multimodelo que puede usar múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte?"
+init_content = "Hola, soy un Asistente de GenIA que permite acceder a múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte hoy?"
 
 # Using "with" notation
 with st.sidebar:
