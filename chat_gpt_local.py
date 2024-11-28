@@ -23,7 +23,11 @@ uploaded_files = st.file_uploader(
     )
 
 
-init_content = "Hola, soy un Asistente de GenIA que permite acceder a múltiples modelos de lenguaje para apoyarte, ¿En qué puedo ayudarte hoy?"
+init_content = """
+Hola, soy un Asistente de GenIA que permite acceder a múltiples m
+odelos de lenguaje para apoyarte, ¿En qué puedo ayudarte hoy?
+"""
+
 
 # Using "with" notation
 with st.sidebar:
