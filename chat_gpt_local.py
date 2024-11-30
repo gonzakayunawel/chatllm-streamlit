@@ -37,7 +37,14 @@ if uploaded_file is not None:
         """)
     # Extraer texto
     with uploaded_file as data:
-        st.write(extract_data(data))
+        st.session_state["document"] = extract_data(data)
+
+        doc_prompt = f"""
+        Responde las preguntas del usuario en base al siguiente texto, si no puedes responder, responde con "No encuentro la respuesta".
+        TEXTO: {st.session_state["document"]}
+        """
+
+        st.session_state["messages"].append({"role": "assistant", "content": doc_prompt})
 else:
     st.warning("No se ha subido ningún archivo aún.")
 
@@ -67,7 +74,7 @@ with st.sidebar:
         ),
     )
 
-    st.session_state["llm_model"] = selected_model
+    # st.session_state["llm_model"] = selected_model
 
     st.write(f"Ahora estás usando el modelo: {selected_model}.")
 
