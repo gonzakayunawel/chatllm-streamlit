@@ -17,11 +17,31 @@ ANTHROPIC_API_KEY = st.secrets["ANTHROPIC_API_KEY"]
 # Título de la aplicación
 st.title(":robot_face: My Local ChatGPT :sunglasses:")
 
+
+# ----- Subir archivos de texto para procesarlos ------
+
 uploaded_files = st.file_uploader(
-    "Choose a file",
-    accept_multiple_files=True
+    "Sube un archivo en pdf, docx, odt, txt, etc.",
+    accept_multiple_files=True,
+    type=["pdf", "docx", "odt", "txt"],
     )
 
+# Comprobar si se han subido archivos
+if uploaded_files is not None:
+    if len(uploaded_files) > 0:
+        st.success(f"{len(uploaded_files)} archivo(s) subido(s) exitosamente.")
+        for file in uploaded_files:
+            st.write(f"Nombre del archivo: {file.name}, Tipo: {file.type}")
+            # Aquí puedes agregar más lógica para procesar el archivo
+    else:
+        st.warning("No se ha subido ningún archivo aún.")
+else:
+    st.info("Por favor, suba un archivo.")
+
+
+uploaded_files.read().decode()
+
+# ----- system prompt ------
 
 init_content = """
 Hola, soy un Asistente de GenIA que permite acceder a múltiples m
