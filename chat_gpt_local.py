@@ -4,6 +4,7 @@ from openai import OpenAI
 from groq import Groq
 from mistralai import Mistral
 import anthropic
+from load_text import extract_data
 
 
 # Llama a la clave API de otro archivo
@@ -20,26 +21,25 @@ st.title(":robot_face: My Local ChatGPT :sunglasses:")
 
 # ----- Subir archivos de texto para procesarlos ------
 
-uploaded_files = st.file_uploader(
-    "Sube un archivo en pdf, docx, odt, txt, etc.",
-    accept_multiple_files=True,
-    type=["pdf", "docx", "odt", "txt"],
+
+uploaded_file = st.file_uploader(
+    "Sube un archivo en pdf, docx o txt.",
+    accept_multiple_files=False,
+    type=["pdf", "docx", "txt"],
     )
 
 # Comprobar si se han subido archivos
-if uploaded_files is not None:
-    if len(uploaded_files) > 0:
-        st.success(f"{len(uploaded_files)} archivo(s) subido(s) exitosamente.")
-        for file in uploaded_files:
-            st.write(f"Nombre del archivo: {file.name}, Tipo: {file.type}")
-            # Aquí puedes agregar más lógica para procesar el archivo
-    else:
-        st.warning("No se ha subido ningún archivo aún.")
+if uploaded_file is not None:
+    st.success(f"""
+        Nombre : {uploaded_file.name} //
+        Tamaño: {uploaded_file.size} bytes //
+        Tipo  : {uploaded_file.type}
+        """)
+    # Extraer texto
+    with uploaded_file as data:
+        st.write(extract_data(data))
 else:
-    st.info("Por favor, suba un archivo.")
-
-
-uploaded_files.read().decode()
+    st.warning("No se ha subido ningún archivo aún.")
 
 # ----- system prompt ------
 
