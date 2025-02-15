@@ -128,7 +128,7 @@ if user_input := st.chat_input():
             client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
             response = client.messages.create(
                 model=selected_model,
-                max_tokens=1000,
+                max_tokens=3000,
                 temperature=0,
                 system=init_content,
                 messages=[{"role": "user", "content": [{"type": "text", "text": str(st.session_state["messages"])}]}],
